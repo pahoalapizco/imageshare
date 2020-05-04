@@ -177,4 +177,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# imagenes
+src/public/upload/*.png
+src/public/upload/*.jpg
+src/public/upload/*.jpeg
+src/public/upload/*.gif
+
 # End of https://www.gitignore.io/api/node,linux,macos,windows
