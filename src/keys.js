@@ -1,5 +1,8 @@
+require('dotenv').config();
+
+const { DB_NAME, DB_PASS, DB_HOST, DB_USER } = process.env;
 module.exports = {
   database: {
-    URI: 'mongodb+srv://curso:6Y9ZVx4a2oqu6ZME@cluster0-lb65t.mongodb.net/redsocial?retryWrites=true&w=majority'
+    URI: `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`
   }
 };

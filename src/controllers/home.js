@@ -1,7 +1,7 @@
 const controller = {};
 
 controller.index = (req, res) => {
-  res.send('Hello!');
+  res.render('index');
 }
 
 module.exports = controller;
