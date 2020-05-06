@@ -6,8 +6,11 @@ const {  Image } = require('../models');
 
 const controller = {};
 
-controller.index = (req, res) => {
-  
+controller.index = async (req, res) => {
+  const { imageId } = req.params;
+  const image = await Image.findOne({ filename: { $regex: imageId } });
+
+  res.render('image', { image });
 };
 
 controller.create = (req, res) => {
@@ -34,11 +37,11 @@ controller.create = (req, res) => {
           filename: imgName +  ext
         });
         const imageSaved = await newImage.save();
+        res.redirect(`/images/${imgName}`);
       } else {
         await fs.unlink(filePath);
         return res.send(`${originalname} no es un archivo valido.`);
       }    
-      res.send('funciono!!');
     }
 
   }

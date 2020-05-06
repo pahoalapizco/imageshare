@@ -5,7 +5,6 @@ const controller = {};
 
 controller.index = async (req, res) => {
   const images = await Image.find().sort({ createdAt: -1 });
-  debug(images)
   res.render('index', { images });
 }
 
