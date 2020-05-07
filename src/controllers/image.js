@@ -1,8 +1,10 @@
 const debug = require('debug')('app:controllers:image');
 const path = require('path');
 const fs = require('fs-extra');
+const md5 = require('md5');
+
 const { randomName, validExtension } = require('../helpers/libs');
-const {  Image } = require('../models');
+const {  Image, Comment } = require('../models');
 
 const controller = {};
 
@@ -53,8 +55,18 @@ controller.like = (req, res) => {
 
 };
 
-controller.comment = (req, res) => {
+controller.comment = async (req, res) => {
+  const { name, email, comment } = req.body;
+  const { imageId } = req.params;
+  const image = await Image.findOne({ filename: { $regex: imageId } });
 
+  if(image) {
+    const newComment = new Comment({ name, email, comment });
+    newComment.gravatar = md5(newComment.email);
+    newComment.imageId = image._id
+    await newComment.save();
+  }
+;  res.redirect(`/images/${image.uniqueId}`);
 };
 controller.remove = (req, res) => {
 
