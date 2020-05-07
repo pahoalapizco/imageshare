@@ -9,13 +9,16 @@ const {  Image, Comment } = require('../models');
 const controller = {};
 
 controller.index = async (req, res) => {
+  const viewModel = { image: {}, comments: {} };
   const { imageId } = req.params;
   const image = await Image.findOne({ filename: { $regex: imageId } });
   if(image){
     image.views++;
     image.save();
+    viewModel.image = image;
     const comments = await Comment.find({ imageId: image._id });
-    res.render('image', { image, comments });
+    viewModel.comments = comments;
+    res.render('image', viewModel);
   } else {
     res.redirect('/');
   }
