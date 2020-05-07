@@ -11,9 +11,15 @@ const controller = {};
 controller.index = async (req, res) => {
   const { imageId } = req.params;
   const image = await Image.findOne({ filename: { $regex: imageId } });
-  const comments = await Comment.find({ imageId: image._id });
+  if(image){
+    image.views++;
+    image.save();
+    const comments = await Comment.find({ imageId: image._id });
+    res.render('image', { image, comments });
+  } else {
+    res.redirect('/');
+  }
 
-  res.render('image', { image, comments });
 };
 
 controller.create = (req, res) => {
@@ -66,8 +72,9 @@ controller.comment = async (req, res) => {
     newComment.gravatar = md5(newComment.email);
     newComment.imageId = image._id
     await newComment.save();
+    res.redirect(`/images/${image.uniqueId}`);
   }
-;  res.redirect(`/images/${image.uniqueId}`);
+  res.redirect('/');
 };
 controller.remove = (req, res) => {
 
