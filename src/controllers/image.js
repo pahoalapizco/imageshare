@@ -11,8 +11,9 @@ const controller = {};
 controller.index = async (req, res) => {
   const { imageId } = req.params;
   const image = await Image.findOne({ filename: { $regex: imageId } });
+  const comments = await Comment.find({ imageId: image._id });
 
-  res.render('image', { image });
+  res.render('image', { image, comments });
 };
 
 controller.create = (req, res) => {
