@@ -84,11 +84,22 @@ controller.comment = async (req, res) => {
     newComment.imageId = image._id
     await newComment.save();
     res.redirect(`/images/${image.uniqueId}`);
+  } else {
+    res.redirect('/');
   }
-  res.redirect('/');
 };
-controller.remove = (req, res) => {
 
+controller.remove = async (req, res) => {
+  const { imageId } = req.params;
+  const image = await Image.findOne({ filename: { $regex: imageId }});
+  let response = false;
+  if(image) {
+    await fs.unlink(path.resolve(`./src/public/upload/${image.filename}`));
+    await Comment.deleteOne({ imageId: image._id });
+    await image.remove();
+    response = true;
+  }
+  res.json(response);
 };
 
 module.exports = controller;

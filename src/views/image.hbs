@@ -37,16 +37,16 @@
     </button>
   </div>
   <div class="card-body">
-    <blockquote>
+    <blockquote id="post-comment">
       <form action="/images/{{ image.uniqueId }}/comment" method="POST">
         <div class="form-group">
-          <input type="text" class="form-control" name="name" placeholder="Nombre" required value="Paola Alapizco">
+          <input type="text" class="form-control" name="name" placeholder="Nombre" required>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" name="email" placeholder="Email" value="paola@paola.com">
+          <input type="text" class="form-control" name="email" placeholder="Email">
         </div>
         <div class="form-group">
-          <textarea name="comment" rows="2" class="form-control" placeholder="Comentario" required> Nice! </textarea>
+          <textarea name="comment" rows="2" class="form-control" placeholder="Comentario" required>  </textarea>
         </div>
         <div class="form-groupp">
           <button class="btn btn-success" id="btn-comment">
