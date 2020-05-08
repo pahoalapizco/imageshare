@@ -61,8 +61,16 @@ controller.create = (req, res) => {
   saveImage();
 };
 
-controller.like = (req, res) => {
-
+controller.like = async (req, res) => {
+  const { imageId } = req.params;
+  const image = await Image.findOne({ filename: { $regex:  imageId } });
+  if(image){
+    image.likes++
+    await image.save();
+    res.json({ likes: image.likes });
+  } else {
+    res.status(500).json({ error: 'Error inesperado '});
+  }
 };
 
 controller.comment = async (req, res) => {
