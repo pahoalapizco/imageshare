@@ -19,4 +19,3 @@ const sidebar = async viewModel => {
 };
 
 module.exports = sidebar;
-}

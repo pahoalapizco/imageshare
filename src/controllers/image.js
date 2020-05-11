@@ -5,11 +5,12 @@ const md5 = require('md5');
 
 const { randomName, validExtension } = require('../helpers/libs');
 const {  Image, Comment } = require('../models');
+const sidebar = require('../helpers/sidebar');
 
 const controller = {};
 
 controller.index = async (req, res) => {
-  const viewModel = { image: {}, comments: {} };
+  let viewModel = { image: {}, comments: {} };
   const { imageId } = req.params;
   const image = await Image.findOne({ filename: { $regex: imageId } });
   if(image){
@@ -18,6 +19,7 @@ controller.index = async (req, res) => {
     viewModel.image = image;
     const comments = await Comment.find({ imageId: image._id });
     viewModel.comments = comments;
+    viewModel = await sidebar(viewModel);
     res.render('image', viewModel);
   } else {
     res.redirect('/');

@@ -1,4 +1,5 @@
-const { Comment } = require("../models");
+const debug = require('debug')('app:helpers:comments');
+const { Comment, Image } = require("../models");
 
 // Utimos comentarios registrados
 const newest = async () => {

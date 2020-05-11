@@ -36,7 +36,7 @@ const imagesTotalLikesCounter = async () => {
 
 // Contador de comentarios
 const commentsCounter = async () => {
-  const totalComments = await Image.countDocuments():
+  const totalComments = await Image.countDocuments();
   return totalComments;
 };
 
